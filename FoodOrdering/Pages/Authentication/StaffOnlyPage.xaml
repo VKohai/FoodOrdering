@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FoodOrdering.Pages.Authentication.StaffOnlyPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarIsVisible="False">
+
+    <VerticalStackLayout
+        Padding="16"
+        MaximumWidthRequest="800"
+        Spacing="16"
+        VerticalOptions="Center">
+        <Label
+            FontSize="Title"
+            HorizontalTextAlignment="Center"
+            Text="Служебный вход" />
+        <Entry x:Name="EmailEntry" Placeholder="E-mail" />
+        <Entry
+            x:Name="PasswordEntry"
+            IsPassword="True"
+            Placeholder="Пароль" />
+        <Button Clicked="LoginButton_Clicked" Text="Войти" />
+    </VerticalStackLayout>
+</ContentPage>

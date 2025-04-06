@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FoodOrdering.Pages.Authentication.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.FlyoutItemIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <Grid
+        Padding="16"
+        MaximumWidthRequest="800"
+        RowDefinitions="*, Auto">
+        <VerticalStackLayout Spacing="12" VerticalOptions="Center">
+            <Label
+                FontSize="Title"
+                HorizontalTextAlignment="Center"
+                Text="Вход" />
+            <Entry x:Name="EmailEntry" Placeholder="Email" />
+            <Entry
+                x:Name="PasswordEntry"
+                IsPassword="True"
+                Placeholder="Пароль" />
+
+            <VerticalStackLayout Spacing="4">
+                <Button Clicked="LoginButton_Clicked" Text="Войти" />
+                <Label
+                    Margin="0,8,0,0"
+                    FontSize="Caption"
+                    HorizontalTextAlignment="Center"
+                    Text="Нет аккаунта? Зарегистрироваться">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="GoToRegister_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+        <Label
+            Grid.Row="1"
+            FontSize="Micro"
+            HorizontalTextAlignment="Center"
+            Text="Служебный вход"
+            TextColor="{StaticResource Gray500}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="GoToStaffOnly_Tapped" />
+            </Label.GestureRecognizers>
+        </Label>
+    </Grid>
+</ContentPage>

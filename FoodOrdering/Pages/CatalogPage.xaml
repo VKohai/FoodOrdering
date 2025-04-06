@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FoodOrdering.Pages.CatalogPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:FoodOrdering.Models">
+    <Shell.TitleView>
+        <Grid Padding="4">
+            <Label
+                x:Name="TitlePage"
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="{OnPlatform WinUI='Start',
+                                               Default='Center'}"
+                TextColor="{StaticResource Primary}" />
+            <Button
+                Clicked="GoToAddProduct"
+                HorizontalOptions="End"
+                Text="Добавить продукт" />
+            <!--  IsVisible="{Binding Source={x:StaticResource vm:BaseViewModel.AdminVisibility}, Mode=TwoWay}"  -->
+        </Grid>
+    </Shell.TitleView>
+
+    <ScrollView MaximumWidthRequest="1024">
+        <CollectionView
+            x:Name="ProductsCollectionView"
+            Margin="12"
+            SelectionChanged="Catalog_SelectionChanged"
+            SelectionMode="Single">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="24"
+                    Orientation="Vertical"
+                    Span="2"
+                    VerticalItemSpacing="16" />
+            </CollectionView.ItemsLayout>
+
+            <!--#region Item template-->
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Product">
+                    <Grid RowDefinitions="Auto, *">
+                        <VerticalStackLayout Margin="0,0,0,4">
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="200"
+                                Source="{Binding Image}" />
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="Title"
+                                MaxLines="1"
+                                Text="{Binding Name}" />
+                        </VerticalStackLayout>
+                        <Label
+                            Grid.Row="1"
+                            FontSize="Medium"
+                            Text="{Binding Price, StringFormat='{0}₽'}"
+                            TextColor="{StaticResource Primary}"
+                            VerticalOptions="End" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <!--#endregion-->
+
+        </CollectionView>
+    </ScrollView>
+</ContentPage>
