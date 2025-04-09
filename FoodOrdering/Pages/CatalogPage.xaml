@@ -3,7 +3,12 @@
     x:Class="FoodOrdering.Pages.CatalogPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:models="clr-namespace:FoodOrdering.Models">
+    xmlns:models="clr-namespace:FoodOrdering.Models"
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
     <Shell.TitleView>
         <Grid Padding="4">
             <Label

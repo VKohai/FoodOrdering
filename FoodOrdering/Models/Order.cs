@@ -23,6 +23,7 @@ public class Order : BaseModel
 
     [Column("user_id")]
     public string UserId { get; set; } = null!;
+
     public ICollection<OrderItem> OrderItems { get; set; } = [];
 }
 

@@ -1,6 +1,7 @@
 ﻿namespace FoodOrdering.Models;
 
-public class Profile : BaseModel {
+public class Profile : BaseModel
+{
     [Column("id")]
     public string Id { get; set; } = null!;
     public string? Username { get; set; }
@@ -13,7 +14,8 @@ public class Profile : BaseModel {
     public DateTime? UpdatedAt { get; set; }
 }
 
-public static class ProfileGroup {
+public static class ProfileGroup
+{
     public const string USER = nameof(USER);
     public const string ADMIN = nameof(ADMIN);
 }

@@ -3,11 +3,41 @@
     x:Class="FoodOrdering.Pages.Products.ProductDetailsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="ProductDetailsPage">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    Title="{Binding Source=., Path=Product.Name}"
+    Shell.TabBarIsVisible="False">
+
+    <Shell.TitleView>
+        <Grid Padding="4">
+            <Label
+                x:Name="TitlePage"
+                FontAttributes="Bold"
+                FontSize="Subtitle"
+                HorizontalOptions="Start"
+                TextColor="{StaticResource Primary}"
+                VerticalOptions="Center" />
+            <Button
+                Clicked="EditProduct_Clicked"
+                HorizontalOptions="End"
+                IsVisible="{Binding Source={x:StaticResource vm:BaseViewModel.AdminVisibility}, Mode=TwoWay}"
+                Text="Редактировать" />
+        </Grid>
+    </Shell.TitleView>
+
+    <Grid
+        Padding="32"
+        MaximumWidthRequest="800"
+        RowDefinitions="400,*">
+        <Image x:Name="ProductImage" Aspect="AspectFit" />
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="End">
+            <Label
+                Margin="0,0,0,8"
+                Text="Выберите размер"
+                VerticalOptions="Center" />
+            <Picker
+                x:Name="SizePicker"
+                Margin="0,0,0,16"
+                MaximumWidthRequest="800" />
+            <Button x:Name="AddToCartBtn" Clicked="AddToCart_Clicked" />
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

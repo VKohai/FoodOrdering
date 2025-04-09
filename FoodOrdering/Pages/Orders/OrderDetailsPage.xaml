@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FoodOrdering.Pages.Orders.OrderDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Заказ"
+    Padding="12"
+    Shell.TabBarIsVisible="False">
+
+    <Grid
+        MaximumWidthRequest="1200"
+        RowDefinitions="75,*,Auto"
+        RowSpacing="25">
+
+        <!--#region Order info-->
+        <Border
+            Padding="6,6,18,6"
+            MaximumHeightRequest="75"
+            VerticalOptions="Start">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout Spacing="4">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Title"
+                        Text="{Binding Source={x:Reference NameScope}, Path=Order.Id, StringFormat='Заказ №{0}'}" />
+                    <Label FontSize="Small" Text="{Binding Source={x:Reference NameScope}, Path=Order.CreatedAt, StringFormat='{}{0:HH:mm}'}" />
+                </VerticalStackLayout>
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalTextAlignment="End"
+                    Text="{Binding Source={x:Reference NameScope}, Path=Order.Status}"
+                    VerticalOptions="Center" />
+            </Grid>
+        </Border>
+        <!--#endregion-->
+
+        <CollectionView x:Name="OrderItemsCollection" Grid.Row="1">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="6" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="6,6,18,6">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="64,*,Auto" ColumnSpacing="12">
+                            <Image Aspect="AspectFit" Source="{Binding Product.Image}" />
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Title"
+                                    Text="{Binding Product.Name}" />
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label
+                                        FontSize="Small"
+                                        Text="{Binding Product.Price, StringFormat='{0} руб.'}"
+                                        TextColor="{StaticResource Primary}" />
+                                    <Label FontSize="Small" Text="{Binding Size, StringFormat='Размер: {0}'}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                            <Label
+                                Grid.Column="2"
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                HorizontalTextAlignment="End"
+                                Text="{Binding Quantity}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="12">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Subtitle"
+                Text="Статус" />
+            <Picker x:Name="StatusPicker" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

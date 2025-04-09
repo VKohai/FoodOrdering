@@ -3,13 +3,53 @@
     x:Class="FoodOrdering.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pages="clr-namespace:FoodOrdering.Pages.Products"
-    Title="FoodOrdering"
-    Shell.FlyoutBehavior="Flyout">
+    xmlns:auth="clr-namespace:FoodOrdering.Pages.Authentication"
+    xmlns:orders="clr-namespace:FoodOrdering.Pages.Orders"
+    xmlns:pages="clr-namespace:FoodOrdering.Pages"
+    xmlns:products="clr-namespace:FoodOrdering.Pages.Products">
+
+    <!--#region Authentication Routes-->
+    <ShellContent
+        ContentTemplate="{DataTemplate auth:LoginPage}"
+        Route="LoginPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False" />
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate pages:AddProductPage}"
-        Route="CatalogPage" />
+        ContentTemplate="{DataTemplate auth:RegisterPage}"
+        Route="RegisterPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False" />
 
+    <ShellContent
+        ContentTemplate="{DataTemplate auth:StaffOnlyPage}"
+        Route="StaffOnlyPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False" />
+    <!--#endregion-->
+
+    <!--#region Main App Routes-->
+    <TabBar>
+        <ShellContent
+            Title="Каталог"
+            ContentTemplate="{DataTemplate pages:CatalogPage}"
+            Icon="catalog.png"
+            Route="CatalogPage" />
+        <ShellContent
+            Title="Корзина"
+            ContentTemplate="{DataTemplate pages:CartPage}"
+            Icon="cart.png" />
+        <ShellContent
+            Title="Заказы"
+            ContentTemplate="{DataTemplate orders:OrdersPage}"
+            Icon="orders.png" />
+    </TabBar>
+    <!--#endregion-->
+
+    <!--#region Product Details Route-->
+    <ShellContent
+        ContentTemplate="{DataTemplate products:ProductDetailsPage}"
+        Route="ProductDetailsPage"
+        Shell.TabBarIsVisible="False" />
+    <!--#endregion-->
 </Shell>

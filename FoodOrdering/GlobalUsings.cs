@@ -15,7 +15,6 @@ global using System.Collections.ObjectModel;
 
 #region Supabase
 
-global using Supabase;
 global using Supabase.Gotrue;
 global using Supabase.Postgrest.Models;
 global using Supabase.Gotrue.Exceptions;

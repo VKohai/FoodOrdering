@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FoodOrdering.Pages.Orders.OrdersPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Заказы"
+    Padding="12">
+
+    <Grid
+        MaximumWidthRequest="1200"
+        RowDefinitions="Auto, *"
+        RowSpacing="12">
+
+        <VerticalStackLayout Spacing="8">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Subtitle"
+                Text="Отображать заказы" />
+            <Picker
+                x:Name="OrderFilterPicker"
+                SelectedIndex="0"
+                SelectedIndexChanged="OrderFilterPicker_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>Все</x:String>
+                    <x:String>Активные</x:String>
+                    <x:String>Завершенные</x:String>
+                </Picker.Items>
+            </Picker>
+        </VerticalStackLayout>
+
+        <CollectionView
+            x:Name="OrdersCollection"
+            Grid.Row="1"
+            SelectionChanged="OrdersCollection_SelectionChanged"
+            SelectionMode="Single">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="12" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="6,6,18,6">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Spacing="4">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Title"
+                                    Text="{Binding Id, StringFormat='Заказ №{0}'}" />
+                                <Label FontSize="Small" Text="{Binding CreatedAt, StringFormat='{}{0:HH:mm}'}" />
+                            </VerticalStackLayout>
+                            <Label
+                                Grid.Column="1"
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                HorizontalTextAlignment="End"
+                                Text="{Binding Status}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

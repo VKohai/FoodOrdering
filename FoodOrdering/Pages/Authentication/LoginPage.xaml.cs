@@ -17,10 +17,11 @@ public partial class LoginPage : ContentPage
             var password = PasswordEntry.Text;
 
             await _authService.LoginAsync(email, password, isStaffOnly: false);
+
             await Shell.Current.GoToAsync($"//{nameof(CatalogPage)}", true);
         }
-        catch (ArgumentException) {
-            await DisplayAlert("Ошибка входа", "E-mail и пароль не могут быть пустыми", "Ок");
+        catch (ArgumentException ex) {
+            await DisplayAlert("Ошибка входа", ex.Message, "Ок");
         }
         catch (GotrueException ex) {
             string msg = ex.Reason switch
