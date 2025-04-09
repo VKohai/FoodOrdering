@@ -41,6 +41,7 @@ public partial class CartPage : ContentPage
 
     private async void CreateOrder_Clicked(object sender, EventArgs e)
     {
+        OrderDto insertedOrder;
         try {
             // Create a new order object
             var order = new OrderDto
@@ -50,22 +51,29 @@ public partial class CartPage : ContentPage
             };
 
             var response = await SB.From<OrderDto>().Insert(order);
-            if (response.Model is not OrderDto insertedOrder) return;
+            if (response.Model is null) return;
+            insertedOrder = response.Model;
 
-            // Step 3: Insert each OrderItem into the database
+            // Insert each OrderItem into the database
             await Parallel.ForEachAsync(
                 _cartService.OrderItems,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 async (orderItem, cancelationToken) =>
             {
-                var orderItemDto = new OrderItemDto
-                {
-                    Size = Enum.GetName(orderItem.Size)!,
-                    OrderId = insertedOrder.Id,
-                    Quantity = orderItem.Quantity,
-                    ProductId = orderItem.ProductId,
-                };
-                await SB.From<OrderItemDto>().Insert(orderItemDto, cancellationToken: cancelationToken);
+                try {
+                    var orderItemDto = new OrderItemDto
+                    {
+                        Size = Enum.GetName(orderItem.Size)!,
+                        OrderId = insertedOrder.Id,
+                        Quantity = orderItem.Quantity,
+                        ProductId = orderItem.ProductId,
+                    };
+                    await SB.From<OrderItemDto>().Insert(orderItemDto, cancellationToken: cancelationToken);
+                }
+                catch (Exception ex) {
+                    await SB.From<OrderDto>().Where(o => o.Id == insertedOrder.Id).Delete();
+                    await DisplayAlert("Ошибка оформления заказа. Заказ отменен", ex.Message, "Ок");
+                }
             });
 
             // Clear the cart after successful order creation
@@ -74,10 +82,10 @@ public partial class CartPage : ContentPage
 
             // Notify the user
             await DisplayAlert("Успех!", "Заказ успешно оформлен.", "Ок");
-            await AppShell.Current.GoToAsync("..");
         }
         catch (Exception ex) {
             // Handle errors during order creation
+            await SB.From<OrderDto>().Where(o => o.Id == insertedOrder.Id).Delete();
             await DisplayAlert("Ошибка оформления заказа", ex.Message, "Ок");
         }
     }
