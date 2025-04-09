@@ -41,7 +41,7 @@ public partial class CartPage : ContentPage
 
     private async void CreateOrder_Clicked(object sender, EventArgs e)
     {
-        OrderDto insertedOrder;
+        OrderDto? insertedOrder = null;
         try {
             // Create a new order object
             var order = new OrderDto
@@ -85,7 +85,8 @@ public partial class CartPage : ContentPage
         }
         catch (Exception ex) {
             // Handle errors during order creation
-            await SB.From<OrderDto>().Where(o => o.Id == insertedOrder.Id).Delete();
+            if (insertedOrder != null)
+                await SB.From<OrderDto>().Where(o => o.Id == insertedOrder.Id).Delete();
             await DisplayAlert("Ошибка оформления заказа", ex.Message, "Ок");
         }
     }
