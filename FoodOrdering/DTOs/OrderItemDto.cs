@@ -1,6 +1,7 @@
-﻿namespace FoodOrdering.Models;
+﻿namespace FoodOrdering.DTOs;
 
-public class OrderItem : BaseModel
+[Table("OrderItem")]
+public class OrderItemDto : BaseModel
 {
     [PrimaryKey("id")]
     public int Id { get; set; }
@@ -9,7 +10,7 @@ public class OrderItem : BaseModel
     public int OrderId { get; set; }
 
     [Column("size")]
-    public ProductSize Size { get; set; }
+    public string Size { get; set; } = Enum.GetName(ProductSize.M)!;
 
     private int _quantity;
 
@@ -26,12 +27,4 @@ public class OrderItem : BaseModel
 
     [Column("product_id")]
     public int ProductId { get; set; }
-    public Product Product { get; set; } = null!;
-
-    public decimal CountTotal() => _quantity * Product.Price;
-}
-
-public enum ProductSize
-{
-    S, M, X, XL
 }

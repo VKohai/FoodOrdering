@@ -1,5 +1,6 @@
 ﻿#region FoodOrdering
 
+global using FoodOrdering.DTOs;
 global using FoodOrdering.Pages;
 global using FoodOrdering.Models;
 global using FoodOrdering.Services;

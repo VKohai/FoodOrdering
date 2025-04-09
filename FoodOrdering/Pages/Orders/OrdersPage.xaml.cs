@@ -12,7 +12,7 @@ public partial class OrdersPage : ContentPage
     protected override async void OnAppearing()
     {
         _orders = (await SB.From<Order>()
-            .Where(order => order.UserId.Equals(SupabaseService.Session!.User!.Id))
+            .Where(order => order.UserId == SupabaseService.Session!.User!.Id)
             .Get()).Models;
         OrdersCollection.ItemsSource = _orders;
     }

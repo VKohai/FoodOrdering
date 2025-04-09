@@ -16,7 +16,6 @@ public partial class CartPage : ContentPage
 
     protected override void OnAppearing()
     {
-        base.OnAppearing();
         UpdateTotal();
     }
 
@@ -44,18 +43,30 @@ public partial class CartPage : ContentPage
     {
         try {
             // Create a new order object
-            var order = new Order
+            var order = new OrderDto
             {
-                Status = OrderStatus.New,
                 UserId = SupabaseService.Session!.User!.Id!,
-                OrderItems = [.. _cartService.OrderItems],
+                Total = _cartService.OrderItems.Sum(x => x.CountTotal())
             };
 
-            var response = await SB.From<Order>().Insert(order);
-            if (response.Model is not Order insertedOrder) return;
+            var response = await SB.From<OrderDto>().Insert(order);
+            if (response.Model is not OrderDto insertedOrder) return;
 
             // Step 3: Insert each OrderItem into the database
-            await SB.From<OrderItem>().Insert(_cartService.OrderItems);
+            await Parallel.ForEachAsync(
+                _cartService.OrderItems,
+                new ParallelOptions { MaxDegreeOfParallelism = 5 },
+                async (orderItem, cancelationToken) =>
+            {
+                var orderItemDto = new OrderItemDto
+                {
+                    Size = Enum.GetName(orderItem.Size)!,
+                    OrderId = insertedOrder.Id,
+                    Quantity = orderItem.Quantity,
+                    ProductId = orderItem.ProductId,
+                };
+                await SB.From<OrderItemDto>().Insert(orderItemDto, cancellationToken: cancelationToken);
+            });
 
             // Clear the cart after successful order creation
             _cartService.ClearCart();
