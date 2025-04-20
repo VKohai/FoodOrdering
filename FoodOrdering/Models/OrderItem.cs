@@ -1,6 +1,8 @@
-﻿namespace FoodOrdering.Models;
+﻿using System.ComponentModel;
 
-public class OrderItem : BaseModel
+namespace FoodOrdering.Models;
+
+public class OrderItem : BaseModel, INotifyPropertyChanged
 {
     [PrimaryKey("id")]
     public int Id { get; set; }
@@ -13,6 +15,8 @@ public class OrderItem : BaseModel
 
     private int _quantity;
 
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     [Column("quantity")]
     public int Quantity
     {
@@ -21,6 +25,7 @@ public class OrderItem : BaseModel
         {
             if (value < 0) value = 0;
             _quantity = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Quantity)));
         }
     }
 

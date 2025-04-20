@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FoodOrdering.Pages.Authentication.LogoutPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Профиль">
+    <VerticalStackLayout
+        Margin="12,4"
+        MaximumWidthRequest="1200"
+        Spacing="8">
+        <Label x:Name="EmailLabel" FontSize="Large" />
+        <Button Clicked="Logout_Clicked" Text="Выйти" />
+    </VerticalStackLayout>
+</ContentPage>

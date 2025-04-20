@@ -4,10 +4,10 @@ public partial class LoginPage : ContentPage
 {
     private readonly AuthenticationService _authService;
 
-    public LoginPage()
+    public LoginPage(AuthenticationService authService)
     {
         InitializeComponent();
-        _authService = new AuthenticationService();
+        _authService = authService;
     }
 
     private async void LoginButton_Clicked(object sender, EventArgs e)

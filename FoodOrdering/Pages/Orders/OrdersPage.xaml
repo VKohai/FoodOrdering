@@ -16,10 +16,7 @@
                 FontAttributes="Bold"
                 FontSize="Subtitle"
                 Text="Отображать заказы" />
-            <Picker
-                x:Name="OrderFilterPicker"
-                SelectedIndex="0"
-                SelectedIndexChanged="OrderFilterPicker_SelectedIndexChanged">
+            <Picker x:Name="OrderFilterPicker" SelectedIndexChanged="OrderFilterPicker_SelectedIndexChanged">
                 <Picker.Items>
                     <x:String>Все</x:String>
                     <x:String>Активные</x:String>

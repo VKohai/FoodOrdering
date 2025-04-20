@@ -3,8 +3,12 @@
     x:Class="FoodOrdering.Pages.Products.ProductDetailsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="{Binding Source=., Path=Product.Name}"
+    xmlns:services="clr-namespace:FoodOrdering.Services"
     Shell.TabBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <services:AuthenticationService />
+    </ContentPage.BindingContext>
 
     <Shell.TitleView>
         <Grid Padding="4">
@@ -18,7 +22,7 @@
             <Button
                 Clicked="EditProduct_Clicked"
                 HorizontalOptions="End"
-                IsVisible="{Binding Source={x:StaticResource vm:BaseViewModel.AdminVisibility}, Mode=TwoWay}"
+                IsVisible="{Binding AdminVisibility}"
                 Text="Редактировать" />
         </Grid>
     </Shell.TitleView>

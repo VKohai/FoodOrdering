@@ -2,18 +2,26 @@ namespace FoodOrdering.Pages.Orders;
 
 public partial class OrdersPage : ContentPage
 {
-    private List<Order> _orders = null!;
+    private List<Order> _orders = [];
 
     public OrdersPage()
     {
         InitializeComponent();
+        OrderFilterPicker.SelectedIndex = 0;
     }
 
     protected override async void OnAppearing()
     {
-        _orders = (await SB.From<Order>()
-            .Where(order => order.UserId == SupabaseService.Session!.User!.Id)
-            .Get()).Models;
+        if (!IsAdmin) {
+            _orders = (await SB.From<Order>()
+                .Where(order => order.UserId == SupabaseService.Session!.User!.Id)
+                .Order("created_at", Supabase.Postgrest.Constants.Ordering.Descending)
+                .Get()).Models;
+        } else {
+            _orders = (await SB.From<Order>()
+                .Order("created_at", Supabase.Postgrest.Constants.Ordering.Descending)
+                .Get()).Models;
+        }
         OrdersCollection.ItemsSource = _orders;
     }
 

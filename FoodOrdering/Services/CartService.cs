@@ -2,12 +2,7 @@
 
 public class CartService
 {
-    public ObservableCollection<OrderItem> OrderItems { get; private set; }
-
-    public CartService()
-    {
-        OrderItems = new ObservableCollection<OrderItem>();
-    }
+    public ObservableCollection<OrderItem> OrderItems { get; private set; } = [];
 
     public void AddToCart(OrderItem orderItem)
     {

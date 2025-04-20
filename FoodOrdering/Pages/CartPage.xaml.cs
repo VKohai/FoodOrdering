@@ -1,6 +1,4 @@
-﻿using Supabase.Postgrest;
-
-namespace FoodOrdering.Pages;
+﻿namespace FoodOrdering.Pages;
 
 public partial class CartPage : ContentPage
 {
@@ -47,7 +45,8 @@ public partial class CartPage : ContentPage
             var order = new OrderDto
             {
                 UserId = SupabaseService.Session!.User!.Id!,
-                Total = _cartService.OrderItems.Sum(x => x.CountTotal())
+                Total = _cartService.OrderItems.Sum(x => x.CountTotal()),
+                CreatedAt = DateTime.Now,
             };
 
             var response = await SB.From<OrderDto>().Insert(order);
@@ -64,6 +63,7 @@ public partial class CartPage : ContentPage
                     var orderItemDto = new OrderItemDto
                     {
                         Size = Enum.GetName(orderItem.Size)!,
+                        
                         OrderId = insertedOrder.Id,
                         Quantity = orderItem.Quantity,
                         ProductId = orderItem.ProductId,

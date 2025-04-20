@@ -29,13 +29,12 @@
         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
             <Button Clicked="SaveProduct_Clicked" Text="Сохранить" />
 
-            <ImageButton
+            <Button
                 Grid.Column="1"
-                Aspect="AspectFit"
                 BackgroundColor="PaleVioletRed"
                 Clicked="DeleteProduct_Clicked"
                 HeightRequest="50"
-                Source="trashcan.png" />
+                Text="Удалить" />
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

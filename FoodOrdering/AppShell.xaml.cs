@@ -8,6 +8,7 @@ public partial class AppShell : Shell
 
         #region Authentication Pages
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+        Routing.RegisterRoute(nameof(LogoutPage), typeof(LogoutPage));
         Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
         Routing.RegisterRoute(nameof(StaffOnlyPage), typeof(StaffOnlyPage)); 
         #endregion

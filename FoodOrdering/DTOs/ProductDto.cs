@@ -1,6 +1,6 @@
-﻿namespace FoodOrdering.Models;
-
-public class Product : BaseModel {
+﻿namespace FoodOrdering.DTOs;
+[Table("Product")]
+public class ProductDto : BaseModel {
     [PrimaryKey("id", false)]
     public int Id { get; set; }
     [Column("name")]
@@ -9,6 +9,4 @@ public class Product : BaseModel {
     public string Image { get; set; } = null!;
     [Column("price")]
     public decimal Price { get; set; }
-
-    public ImageSource? ImageSource { get; set; }
 }

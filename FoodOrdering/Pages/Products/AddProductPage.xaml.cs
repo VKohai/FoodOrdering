@@ -1,16 +1,13 @@
 namespace FoodOrdering.Pages.Products;
 
-public partial class AddProductPage : ContentPage
-{
-    private string _imagePath = "";
+public partial class AddProductPage : ContentPage {
+    private FileResult? _fileResult;
 
-    public AddProductPage()
-    {
+    public AddProductPage() {
         InitializeComponent();
     }
 
-    private async void LoadImage_Click(object sender, EventArgs e)
-    {
+    private async void LoadImage_Click(object sender, EventArgs e) {
         try {
             var pickOptions = new PickOptions
             {
@@ -18,48 +15,55 @@ public partial class AddProductPage : ContentPage
                 PickerTitle = "Изображение для продукта"
             };
 
-            var result = await FilePicker.PickAsync(pickOptions);
-            if (result is null) return;
+            _fileResult = await FilePicker.PickAsync(pickOptions);
+            if (_fileResult is null) return;
 
-            using var stream = await result.OpenReadAsync();
+            using var stream = await _fileResult.OpenReadAsync();
             var memoryStream = new MemoryStream();
             await stream.CopyToAsync(memoryStream);
             memoryStream.Seek(0, SeekOrigin.Begin);
 
             ProductImage.Source = ImageSource.FromStream(() => memoryStream);
-            _imagePath = result.FullPath;
-        }
-        catch (Exception ex) {
-            await AppShell.Current.DisplayAlert("Ошибка выбора файла.", ex.Message, "Понятно");
+        } catch (Exception ex) {
+            await DisplayAlert("Ошибка выбора файла.", ex.Message, "Понятно");
         }
     }
 
-    private async void AddProduct_Clicked(object sender, EventArgs e)
-    {
+    private async void AddProduct_Clicked(object sender, EventArgs e) {
         try {
-            if (!SupabaseService.IsAdmin)
+            if (!IsAdmin)
                 throw new Exception("Вы не являетесь админом, чтобы добавлять продукты");
+
+            if (_fileResult == null) {
+                await DisplayAlert("Фото не выбрано", "Выберите фотографию продукта!", "Ок");
+                return;
+            }
 
             if (string.IsNullOrWhiteSpace(ProductNameEntry.Text))
                 throw new Exception("Введите название продукта.");
+
             if (string.IsNullOrWhiteSpace(ProductPriceEntry.Text) ||
                 !decimal.TryParse(ProductPriceEntry.Text, out var price))
                 throw new Exception("Введите корректную цену.");
 
-            var product = new Product
-            {
+            var supabasePath = $"Products/{DateTime.UtcNow.ToShortTimeString()}-{Guid.NewGuid()}-{_fileResult.FileName}";
+            supabasePath = await SB.Storage
+                .From("product-images")
+                .Upload(
+                    localFilePath: _fileResult.FullPath,
+                    supabasePath: supabasePath,
+                    options: new Supabase.Storage.FileOptions { ContentType = _fileResult.ContentType });
+
+            await SB.From<ProductDto>().Insert(new ProductDto {
                 Name = ProductNameEntry.Text.Trim(),
-                Image = _imagePath,
+                Image = supabasePath,
                 Price = price
-            };
+            });
 
-            await SupabaseService.SB.From<Product>().Insert(product);
-
-            await AppShell.Current.DisplayAlert("Успех!", "Продукт добавлен", "Ок");
+            await DisplayAlert("Успех!", "Продукт добавлен", "Ок");
             await AppShell.Current.GoToAsync("..");
-        }
-        catch (Exception ex) {
-            await AppShell.Current.DisplayAlert("Ошибка добавления продукта", ex.Message, "Ок");
+        } catch (Exception ex) {
+            await DisplayAlert("Ошибка добавления продукта", ex.Message, "Ок");
         }
     }
 }

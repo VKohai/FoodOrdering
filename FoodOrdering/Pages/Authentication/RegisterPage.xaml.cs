@@ -4,10 +4,10 @@ public partial class RegisterPage : ContentPage
 {
     private readonly AuthenticationService _authService;
 
-    public RegisterPage()
+    public RegisterPage(AuthenticationService authService)
     {
         InitializeComponent();
-        _authService = new AuthenticationService();
+        _authService =  authService;
     }
 
     private async void RegisterButton_Clicked(object sender, EventArgs e)

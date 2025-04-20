@@ -4,11 +4,19 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:models="clr-namespace:FoodOrdering.Models"
+    xmlns:services="clr-namespace:FoodOrdering.Services"
+    Title="Каталог"
     NavigationPage.HasBackButton="False"
     NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <services:AuthenticationService />
+    </ContentPage.BindingContext>
+
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
+
     <Shell.TitleView>
         <Grid Padding="4">
             <Label
@@ -21,8 +29,8 @@
             <Button
                 Clicked="GoToAddProduct"
                 HorizontalOptions="End"
+                IsVisible="{Binding AdminVisibility}"
                 Text="Добавить продукт" />
-            <!--  IsVisible="{Binding Source={x:StaticResource vm:BaseViewModel.AdminVisibility}, Mode=TwoWay}"  -->
         </Grid>
     </Shell.TitleView>
 
@@ -49,7 +57,7 @@
                             <Image
                                 Aspect="AspectFit"
                                 HeightRequest="200"
-                                Source="{Binding Image}" />
+                                Source="{Binding ImageSource}" />
                             <Label
                                 FontAttributes="Bold"
                                 FontSize="Title"

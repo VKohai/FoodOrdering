@@ -4,10 +4,10 @@ public partial class StaffOnlyPage : ContentPage
 {
     private readonly AuthenticationService _authService;
 
-    public StaffOnlyPage()
+    public StaffOnlyPage(AuthenticationService authService)
     {
         InitializeComponent();
-        _authService = new AuthenticationService();
+        _authService = authService;
     }
 
     private async void LoginButton_Clicked(object sender, EventArgs e)

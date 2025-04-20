@@ -13,17 +13,15 @@ public partial class ProductDetailsPage : ContentPage
         InitializeComponent();
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
-        base.OnAppearing();
-
         // Set the page title
         TitlePage.Text = Product?.Name ?? "Продукт";
         AddToCartBtn.Text = $"В корзину за {Product?.Price ?? 0}₽";
-        ProductImage.Source = Product?.Image;
         // Populate the size picker
-        SizePicker.ItemsSource = Enum.GetValues(typeof(ProductSize));
+        SizePicker.ItemsSource = Enum.GetValues<ProductSize>();
         SizePicker.SelectedIndex = 0; // Default selection
+        ProductImage.Source = await Product!.Image.DownloadImageAsync();
     }
 
     private async void EditProduct_Clicked(object sender, EventArgs e)
@@ -47,6 +45,7 @@ public partial class ProductDetailsPage : ContentPage
         }
 
         // Create an order item
+        Product.ImageSource = await Product.Image.DownloadImageAsync();
         var orderItem = new OrderItem
         {
             Size = selectedSize,
