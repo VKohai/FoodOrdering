@@ -25,7 +25,7 @@ public partial class CatalogPage : ContentPage {
     private async Task GetProductsAsync() {
         var products = await SB.From<Product>().Get();
         if (products.Models.Count == 0)
-            throw new Exception("Products are not found");
+            throw new Exception("Каталог продуктов пуст.");
 
         _products.Clear();
         foreach (var product in products.Models) {

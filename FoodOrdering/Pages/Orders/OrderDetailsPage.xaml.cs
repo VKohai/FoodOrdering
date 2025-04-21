@@ -40,6 +40,9 @@ public partial class OrderDetailsPage : ContentPage
             .Select("*,Product!inner(*)")
             .Where(oi => oi.OrderId == Order.Id)
             .Get()).Models;
+        if (orderItems.Count == 0)
+            throw new Exception("Продукты из заказа были удалены из системы.");
+
         foreach (var oi in orderItems)
             oi.Product.ImageSource = await oi.Product.Image.DownloadImageAsync();
         OrderItemsCollection.ItemsSource = Order.OrderItems = orderItems;
