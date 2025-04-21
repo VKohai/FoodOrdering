@@ -78,7 +78,7 @@ public partial class EditProductPage : ContentPage {
                 throw new Exception("Продукт не найден");
 
             await DisplayAlert("Успех!", $"{Product.Name} обновлен!", "Ок");
-            await AppShell.Current.GoToAsync("..", true);
+            await AppShell.Current.GoToAsync($"//{nameof(CatalogPage)}", true);
         } catch (Exception ex) {
             await DisplayAlert("Ошибка сохранения.", ex.Message, "Ок");
         }
@@ -101,7 +101,7 @@ public partial class EditProductPage : ContentPage {
             var supabasePath = Product.Image[(Product.Image.IndexOf('/') + 1)..];
             await SB.Storage.From("product-images").Remove(supabasePath);
             await DisplayAlert("Успех!", $"{Product.Name} удален.", "Ок");
-            await AppShell.Current.GoToAsync("..", true);
+            await AppShell.Current.GoToAsync($"//{nameof(CatalogPage)}", true);
         } catch (Exception ex) {
             await DisplayAlert("Ошибка удаления.", ex.Message, "Ок");
         }

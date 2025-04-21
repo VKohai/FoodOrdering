@@ -16,6 +16,7 @@ public partial class CatalogPage : ContentPage {
             await GetProductsAsync();
         } catch (Exception ex) {
             await DisplayAlert("Ошибка получения продуктов", ex.Message, "Ок");
+            _products.Clear();
         } finally {
             IsBusy = false;
         }

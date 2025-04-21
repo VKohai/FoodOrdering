@@ -23,9 +23,7 @@
                 x:Name="TitlePage"
                 FontAttributes="Bold"
                 FontSize="Large"
-                HorizontalOptions="{OnPlatform WinUI='Start',
-                                               Default='Center'}"
-                TextColor="{StaticResource Primary}" />
+                HorizontalOptions="{OnPlatform Default='Start'}" />
             <Button
                 Clicked="GoToAddProduct"
                 HorizontalOptions="End"
@@ -61,7 +59,7 @@
                             <Label
                                 FontAttributes="Bold"
                                 FontSize="Title"
-                                MaxLines="1"
+                                LineBreakMode="WordWrap"
                                 Text="{Binding Name}" />
                         </VerticalStackLayout>
                         <Label

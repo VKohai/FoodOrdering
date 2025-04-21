@@ -46,7 +46,7 @@ public partial class AddProductPage : ContentPage {
                 !decimal.TryParse(ProductPriceEntry.Text, out var price))
                 throw new Exception("¬ведите корректную цену.");
 
-            var supabasePath = $"Products/{DateTime.UtcNow.ToShortTimeString()}-{Guid.NewGuid()}-{_fileResult.FileName}";
+            var supabasePath = $"Products/{Guid.NewGuid()}";
             supabasePath = await SB.Storage
                 .From("product-images")
                 .Upload(

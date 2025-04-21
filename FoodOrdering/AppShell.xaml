@@ -33,20 +33,10 @@
         <ShellContent
             Title="Каталог"
             ContentTemplate="{DataTemplate pages:CatalogPage}"
-            Icon="catalog.png"
             Route="CatalogPage" />
-        <ShellContent
-            Title="Корзина"
-            ContentTemplate="{DataTemplate pages:CartPage}"
-            Icon="cart.png" />
-        <ShellContent
-            Title="Заказы"
-            ContentTemplate="{DataTemplate orders:OrdersPage}"
-            Icon="orders.png" />
-        <ShellContent
-            Title="Профиль"
-            ContentTemplate="{DataTemplate auth:LogoutPage}"
-            Icon="orders.png" />
+        <ShellContent Title="Корзина" ContentTemplate="{DataTemplate pages:CartPage}" />
+        <ShellContent Title="Заказы" ContentTemplate="{DataTemplate orders:OrdersPage}" />
+        <ShellContent Title="Профиль" ContentTemplate="{DataTemplate auth:LogoutPage}" />
     </TabBar>
     <!--#endregion-->
 

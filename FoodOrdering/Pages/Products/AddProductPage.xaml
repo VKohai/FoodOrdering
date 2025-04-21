@@ -20,8 +20,7 @@
                 BackgroundColor="{Null}"
                 Clicked="LoadImage_Click"
                 HorizontalOptions="Center"
-                Text="Выбрать изображение"
-                TextColor="{StaticResource Primary}" />
+                Text="Выбрать изображение" />
         </VerticalStackLayout>
 
         <Entry x:Name="ProductNameEntry" Placeholder="Название" />

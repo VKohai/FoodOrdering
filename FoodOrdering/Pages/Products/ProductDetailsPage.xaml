@@ -17,7 +17,6 @@
                 FontAttributes="Bold"
                 FontSize="Subtitle"
                 HorizontalOptions="Start"
-                TextColor="{StaticResource Primary}"
                 VerticalOptions="Center" />
             <Button
                 Clicked="EditProduct_Clicked"
